@@ -117,7 +117,7 @@ RapidFuzz==3.12.2
 rdflib==6.3.2
 regex==2024.11.6
 reportlab==4.3.1
-requests==2.32.3
+requests>=2.26,<3.0
 requests-toolbelt==1.0.0
 scikit-image==0.24.0
 scipy==1.15.2
