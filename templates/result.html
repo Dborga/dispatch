@@ -10,121 +10,148 @@
       padding: 20px;
       font-family: Arial, sans-serif;
     }
-    .header-section {
+    .summary-grid {
+      display: flex;
+      gap: 10px;
       margin-bottom: 20px;
     }
-    .row-label {
+    .summary-column:first-child {
+      flex: 0 0 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-column:last-child {
+      flex: 0 0 90%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-box {
+      padding: 10px;
+      min-height: 50px;
       display: flex;
       align-items: flex-start;
-      margin-bottom: 24px;
+      text-align: left;
+      background-color: white;
     }
-    .row-label .label {
-      width: 150px;
+    .summary-box.large {
+      min-height: 100px;
+      align-items: flex-start;
+      display: flex;
     }
-    .row-label .value {
-      flex: 1;
-      padding-left: 600px;
-    }
-    .align-shipto {
+    .input-box {
+      padding: 10px;
+      min-height: 50px;
       display: flex;
       align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+      background-color: white;
     }
-    .align-shipto .label {
-      width: 150px;
+    .input-box.large {
+      min-height: 100px;
+      align-items: flex-start;
+      display: flex;
     }
-    .shipto-details {
-      flex: 1;
-      padding-left: 600px;
+    .table-container {
+      border: 1px solid black;
+      margin-top: 20px;
     }
-    .shipto-details div {
-      line-height: 1.1;
-      margin: 0;
-    }
-    .table {
+    table.summary-table {
+      border-collapse: separate;
+      border-spacing: 2px;
+      width: 100%;
       table-layout: fixed;
-      word-wrap: break-word;
       font-size: 14px;
     }
-    td, th {
-      vertical-align: middle !important;
+    table.summary-table th,
+    table.summary-table td {
+      border: 1px solid black;
+      padding: 8px;
       text-align: center;
+      vertical-align: middle;
+      word-wrap: break-word;
     }
-    th {
-      background-color: #f2f2f2;
-    }
-    .btn-new {
-      margin-top: 30px;
+    table.summary-table th {
+      background-color: white;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <div class="header-section">
-    <div class="row-label">
-      <div class="label">Dispatch Comments:</div>
-      <div class="value">{{ data.dispatch_comments }}</div>
+  <div class="summary-grid">
+    <div class="summary-column">
+      <div class="summary-box">Dispatch Comments:</div>
+      <div class="summary-box large">Ship-to:</div>
     </div>
-    <br>
-
-    <div class="row-label align-shipto">
-      <div class="label">Ship-to:</div>
-      <div class="shipto-details">
-        <div>{{ data.customer_name }}</div>
-        <div>{{ data.shipto_name }}</div>
-        <div>{{ data.site_address }}</div>
+    <div class="summary-column">
+      <div class="input-box">{{ data.dispatch_comments }}</div>
+      <div class="input-box large">
+        <div>
+          {{ data.customer_name }}<br>
+          {{ data.shipto_name }}<br>
+          {{ data.site_address }}
+        </div>
       </div>
     </div>
   </div>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Order #</th>
-        <th>Delivery #</th>
-        <th>Brand</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>UOM</th>
-        <th>Total Weight</th>
-        <th>Terminal</th>
-        <th>Supplier</th>
-        <th>Type</th>
-        <th>Loading #</th>
-        <th>Customer Corp/Ship To PO #</th>
-        <th>Delivery Date</th>
-        <th>Delivery Day</th>
-        <th>Delivery Window</th>
-        <th>Tank</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ data.order_number }}</td>
-        <td>{{ data.delivery_number }}</td>
-        <td>{{ data.brand }}</td>
-        <td>{{ data.product }}</td>
-        <td>{{ data.quantity }}</td>
-        <td>Liter</td>
-        <td></td>
-        <td style="white-space: pre-line;">{{ data.terminal }}</td>
-        <td>{{ data.supplier }}</td>
-        <td></td>
-        <td></td>
-        <td>{{ data.corporate_po }}</td>
-        <td>{{ data.delivery_date }}</td>
-        <td>{{ data.delivery_day }}</td>
-        <td>{{ data.delivery_window }}</td>
-        <td>1250 - Liter - DEF - AST - PUMP REQUIRED</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Delivery #</th>
+          <th>Brand</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>UOM</th>
+          <th>Total Weight</th>
+          <th>Terminal</th>
+          <th>Supplier</th>
+          <th>Type</th>
+          <th>Loading #</th>
+          <th>Customer Corp/Ship To PO #</th>
+          <th>Delivery Date</th>
+          <th>Delivery Day</th>
+          <th>Delivery Window</th>
+          <th>Tank</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ data.order_number }}</td>
+          <td>{{ data.delivery_number }}</td>
+          <td>{{ data.brand }}</td>
+          <td>{{ data.product }}</td>
+          <td>{{ data.quantity }}</td>
+          <td>Liter</td>
+          <td></td>
+          <td style="white-space: pre-line;">{{ data.terminal }}</td>
+          <td>{{ data.supplier }}</td>
+          <td></td>
+          <td></td>
+          <td>{{ data.corporate_po }}</td>
+          <td>{{ data.delivery_date }}</td>
+          <td>{{ data.delivery_day }}</td>
+          <td>{{ data.delivery_window }}</td>
+          <td>1250 - Liter - DEF - AST - PUMP REQUIRED</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="text-center">
-    <a href="{{ url_for('form') }}" class="btn btn-primary btn-new">Create Another Dispatch</a>
+    <a href="{{ url_for('form') }}" class="btn btn-primary mt-4">Create Another Dispatch</a>
   </div>
 
 </body>
 </html>
+
+
+
 
 
 
