@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery Entry</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f8fa;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .top-bar {
+      background-color: #1c3d5a;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+    }
+    .top-bar img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .top-bar h2 {
+      font-size: 22px;
+      margin: 0;
+    }
+    .section-header {
+      background-color: #1c3d5a;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .form-section {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 20px;
+      background-color: #fff;
+    }
+    form {
+      margin: 0 20px;
+    }
+    select:required:invalid {
+      background-color: #fff8b3;
+    }
+    select:required:valid {
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <img src="/static/images/logo.PNG" alt="Mansfield Logo">
+    <h2>Manual Order Entry</h2>
+  </div>
+
+  <form action="/result" method="POST">
+    <div class="form-section">
+      <div class="section-header">Order Header</div>
+      <div class="row mb-3">
+        <div class="col">
+          <label>Order #</label>
+          <input name="order_number" class="form-control" placeholder="Enter order number" required>
+        </div>
+        <div class="col">
+          <label>Delivery #</label>
+          <input name="delivery_number" class="form-control" placeholder="Enter delivery number" required>
+        </div>
+        <div class="col">
+          <label>Customer Name</label>
+          <input name="customer_name" class="form-control" placeholder="Enter customer name" required>
+        </div>
+        <div class="col">
+          <label>Ship-To Name</label>
+          <input name="shipto_name" class="form-control" placeholder="Enter ship-to name" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label>Site Address</label>
+          <input name="site_address" class="form-control" placeholder="Type full address" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header">Requested Delivery</div>
+      <div class="row mb-3">
+        <div class="col">
+          <label>Requested Delivery Date</label>
+          <input type="date" name="delivery_date" class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Container</label>
+          <select name="container" class="form-control" required>
+            <option value="" disabled selected>Select container</option>
+            <option value="Diesel Exhaust Fluid 1-1250">Diesel Exhaust Fluid 1-1250</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Packaged">Packaged</option>
+          </select>
+        </div>
+        <div class="col">
+          <label>Requested Product</label>
+          <input name="product" class="form-control" placeholder="Enter product" required>
+        </div>
+        <div class="col">
+          <label>Quantity</label>
+          <input name="quantity" class="form-control" placeholder="Enter quantity" required>
+        </div>
+        <div class="col">
+          <label>Corporate PO</label>
+          <input name="corporate_po" class="form-control" placeholder="Enter PO number" required>
+        </div>
+        <div class="col">
+          <label>Brand</label>
+          <select name="brand" class="form-control" required>
+            <option value="NA">NA</option>
+            <option value="RIDGELINE">RIDGELINE</option>
+            <option value="BLUE LEAF">BLUE LEAF</option>
+            <option value="WestPier DEF">WestPier DEF</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label>Terminal Name & Address</label>
+          <select name="terminal" class="form-control" required>
+            <option value="" disabled selected>Select terminal</option>
+            <option value="943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2">943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2</option>
+            <option value="Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2">Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2</option>
+            <option value="Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2">Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2</option>
+            <option value="Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6">Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6</option>
+            <option value="Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0">Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header">Comments</div>
+      <div class="row">
+        <div class="col">
+          <label>Dispatch Comments</label>
+          <textarea name="dispatch_comments" class="form-control" placeholder="Enter comments" rows="3" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mb-5">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</body>
+</html>
+
