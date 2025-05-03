@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -46,10 +45,27 @@
     .multiline {
       white-space: pre-line;
     }
+    .text-center {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      background-color: #0d6efd;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #0b5ed7;
+    }
   </style>
 </head>
 <body>
-
   <table class="header-table">
     <tr>
       <td class="label">Dispatch Comments:</td>
@@ -87,29 +103,59 @@
       </tr>
     </thead>
     <tbody>
+      {% for delivery in data.deliveries %}
       <tr>
-        <td>{{ data.order_number }}</td>
-        <td>{{ data.delivery_number }}</td>
-        <td>{{ data.brand }}</td>
-        <td>{{ data.product }}</td>
-        <td>{{ data.quantity }}</td>
+        <td>{{ delivery.order_number }}</td>
+        <td>{{ delivery.delivery_number }}</td>
+        <td>{{ delivery.brand }}</td>
+        <td>{{ delivery.product }}</td>
+        <td>{{ delivery.quantity }}</td>
         <td>Liter</td>
         <td></td>
-        <td class="multiline">{{ data.terminal }}</td>
-        <td>{{ data.supplier }}</td>
+        <td class="multiline">{{ delivery.terminal }}</td>
+        <td>{{ delivery.supplier }}</td>
         <td></td>
         <td></td>
-        <td>{{ data.corporate_po }}</td>
-        <td>{{ data.delivery_date }}</td>
-        <td>{{ data.delivery_day }}</td>
-        <td>{{ data.delivery_window }}</td>
+        <td>{{ delivery.corporate_po }}</td>
+        <td>{{ delivery.delivery_date }}</td>
+        <td>{{ delivery.delivery_day }}</td>
+        <td>{{ delivery.delivery_window }}</td>
         <td>1250 - Liter - DEF - AST - PUMP REQUIRED</td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 
+  <div class="text-center">
+    <a href="{{ url_for('form') }}" class="btn">Create Another Dispatch</a>
+  </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

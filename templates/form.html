@@ -31,6 +31,9 @@
       padding: 10px;
       margin-bottom: 10px;
       font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .form-section {
       border: 1px solid #ccc;
@@ -46,6 +49,18 @@
     }
     select:required:valid {
       background-color: white;
+    }
+    .section-controls {
+      display: flex;
+      gap: 5px;
+    }
+    .section-controls button {
+      background-color: white;
+      border: none;
+      font-weight: bold;
+      font-size: 20px;
+      color: #1c3d5a;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -84,55 +99,64 @@
       </div>
     </div>
 
-    <div class="form-section">
-      <div class="section-header">Requested Delivery</div>
-      <div class="row mb-3">
-        <div class="col">
-          <label>Requested Delivery Date</label>
-          <input type="date" name="delivery_date" class="form-control" required>
+    <div id="delivery-sections">
+      <div class="form-section delivery-entry">
+        <div class="section-header">
+          Requested Delivery
+          <div class="section-controls">
+            <button type="button" onclick="addSection()">+</button>
+            <button type="button" onclick="removeSection(this)">&times;</button>
+          </div>
         </div>
-        <div class="col">
-          <label>Container</label>
-          <select name="container" class="form-control" required>
-            <option value="" disabled selected>Select container</option>
-            <option value="Diesel Exhaust Fluid 1-1250">Diesel Exhaust Fluid 1-1250</option>
-            <option value="Equipment">Equipment</option>
-            <option value="Packaged">Packaged</option>
-          </select>
+        <div class="row mb-3">
+          <div class="col">
+            <label>Requested Delivery Date</label>
+            <input type="date" name="delivery_date" class="form-control" required>
+          </div>
+          <div class="col">
+            <label>Container</label>
+            <select name="container" class="form-control" required>
+              <option value="" disabled selected>Select container</option>
+              <option valye="Diesel Exhaust Fluid 1-40,000">Diesel Exhaust Fluid 1 - 40,000</option>
+              <option value="Diesel Exhaust Fluid 1-1250">Diesel Exhaust Fluid 1-1250</option>
+              <option value="Equipment">Equipment</option>
+              <option value="Packaged">Packaged</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Requested Product</label>
+            <input name="product" class="form-control" placeholder="Enter product" required>
+          </div>
+          <div class="col">
+            <label>Quantity</label>
+            <input name="quantity" class="form-control" placeholder="Enter quantity" required>
+          </div>
+          <div class="col">
+            <label>Corporate PO</label>
+            <input name="corporate_po" class="form-control" placeholder="Enter PO number" required>
+          </div>
+          <div class="col">
+            <label>Brand</label>
+            <select name="brand" class="form-control" required>
+              <option value="NA">NA</option>
+              <option value="RIDGELINE">RIDGELINE</option>
+              <option value="BLUE LEAF">BLUE LEAF</option>
+              <option value="WestPier DEF">WestPier DEF</option>
+            </select>
+          </div>
         </div>
-        <div class="col">
-          <label>Requested Product</label>
-          <input name="product" class="form-control" placeholder="Enter product" required>
-        </div>
-        <div class="col">
-          <label>Quantity</label>
-          <input name="quantity" class="form-control" placeholder="Enter quantity" required>
-        </div>
-        <div class="col">
-          <label>Corporate PO</label>
-          <input name="corporate_po" class="form-control" placeholder="Enter PO number" required>
-        </div>
-        <div class="col">
-          <label>Brand</label>
-          <select name="brand" class="form-control" required>
-            <option value="NA">NA</option>
-            <option value="RIDGELINE">RIDGELINE</option>
-            <option value="BLUE LEAF">BLUE LEAF</option>
-            <option value="WestPier DEF">WestPier DEF</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label>Terminal Name & Address</label>
-          <select name="terminal" class="form-control" required>
-            <option value="" disabled selected>Select terminal</option>
-            <option value="943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2">943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2</option>
-            <option value="Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2">Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2</option>
-            <option value="Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2">Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2</option>
-            <option value="Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6">Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6</option>
-            <option value="Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0">Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0</option>
-          </select>
+        <div class="row">
+          <div class="col">
+            <label>Terminal Name & Address</label>
+            <select name="terminal" class="form-control" required>
+              <option value="" disabled selected>Select terminal</option>
+              <option value="943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2">943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2</option>
+              <option value="Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2">Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2</option>
+              <option value="Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2">Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2</option>
+              <option value="Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6">Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6</option>
+              <option value="Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0">Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -151,6 +175,33 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
+
+  <script>
+    let maxSections = 6;
+
+    function addSection() {
+      const sections = document.querySelectorAll('.delivery-entry');
+      if (sections.length >= maxSections) return;
+      const index = sections.length;
+      const clone = sections[0].cloneNode(true);
+
+      clone.querySelectorAll('input, select, textarea').forEach(input => {
+        const original = input.getAttribute('name');
+        if (original) {
+          const base = original.split('_')[0];
+          input.setAttribute('name', base + '_' + index);
+          input.value = '';
+        }
+      });
+
+      document.getElementById('delivery-sections').appendChild(clone);
+    }
+
+    function removeSection(button) {
+      const sections = document.querySelectorAll('.delivery-entry');
+      if (sections.length <= 1) return;
+      button.closest('.delivery-entry').remove();
+    }
+  </script>
 </body>
 </html>
-
