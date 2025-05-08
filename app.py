@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def form():
-    return render_template('form.html')  # Uses your existing form.html
+    return render_template('form.html')
 
 @app.route('/result', methods=['POST'])
 def result():
@@ -20,8 +20,33 @@ def result():
 
     for i in range(6):
         suffix = f"_{i}" if i > 0 else ""
-        # Only add if there's a product or PO field
         if form.get(f"product{suffix}") or form.get(f"corporate_po{suffix}"):
+            raw_date = form.get(f"delivery_date{suffix}")
+            delivery_date = ""
+            delivery_day = ""
+            if raw_date:
+                try:
+                    parsed = datetime.strptime(raw_date, "%Y-%m-%d")
+                    delivery_date = parsed.strftime("%m/%d/%Y")
+                    delivery_day = parsed.strftime("%A")
+                except ValueError:
+                    pass
+
+            terminal = form.get(f"terminal{suffix}", "")
+            container = form.get(f"container{suffix}", "")
+            supplier = ""
+
+            if "943 Delson" in terminal:
+                supplier = "Mansfield of Canada ULC"
+            elif "Niagara Falls" in terminal:
+                supplier = "Mansfield of Canada ULC" if container == "Diesel Exhaust Fluid 1-1250" else "Oleo Energies Inc"
+            elif "Ponoka" in terminal:
+                supplier = "CBluO (DBA)"
+            elif "Longueuil" in terminal:
+                supplier = "Crevier Lubricant Inc"
+            elif "Kitchener" in terminal:
+                supplier = "FS Partners"
+
             delivery = {
                 "order_number": form.get("order_number"),
                 "delivery_number": form.get("delivery_number"),
@@ -29,38 +54,17 @@ def result():
                 "product": form.get(f"product{suffix}"),
                 "quantity": form.get(f"quantity{suffix}"),
                 "corporate_po": form.get(f"corporate_po{suffix}"),
-                "delivery_window": form.get(f"delivery_window{suffix}"),
-                "terminal": form.get(f"terminal{suffix}"),
-                "supplier": "",
-                "delivery_date": "",
-                "delivery_day": ""
+                "delivery_window": form.get(f"delivery_window{suffix}", ""),  # Optional
+                "terminal": terminal,
+                "supplier": supplier,
+                "delivery_date": delivery_date,
+                "delivery_day": delivery_day,
+                "uom": "Liter",
+                "total_weight": "",
+                "type": "",
+                "loading_number": "",
+                "tank": "1250 - Liter - DEF - AST - PUMP REQUIRED"
             }
-
-            raw_date = form.get(f"delivery_date{suffix}")
-            if raw_date:
-                try:
-                    parsed = datetime.strptime(raw_date, "%Y-%m-%d")
-                    delivery["delivery_date"] = parsed.strftime("%m/%d/%Y")
-                    delivery["delivery_day"] = parsed.strftime("%A")
-                except ValueError:
-                    pass
-
-            terminal = delivery["terminal"]
-            container = form.get(f"container{suffix}")
-
-            if "943 Delson MCU DEF INV" in terminal:
-                delivery["supplier"] = "Mansfield of Canada ULC"
-            elif "Niagara Falls ON-Oleo Energies" in terminal:
-                if container == "Diesel Exhaust Fluid 1-1250":
-                    delivery["supplier"] = "Mansfield of Canada ULC"
-                elif container == "Packaged":
-                    delivery["supplier"] = "Oleo Energies Inc"
-            elif "Ponoka AB-CBluO" in terminal:
-                delivery["supplier"] = "CBluO (DBA)"
-            elif "Longueuil QC-Crevier" in terminal:
-                delivery["supplier"] = "Crevier Lubricant Inc"
-            elif "Kitchener ON-FS Partners" in terminal:
-                delivery["supplier"] = "FS Partners"
 
             data["deliveries"].append(delivery)
 
@@ -68,6 +72,8 @@ def result():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 
 
 

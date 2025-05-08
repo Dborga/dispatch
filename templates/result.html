@@ -1,136 +1,108 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Dispatch Summary</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: white;
-      padding: 20px;
-      font-size: 14px;
-    }
-    .header-table {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    .header-table td {
-      vertical-align: top;
-      padding: 5px 10px;
-    }
-    .label {
-      font-weight: bold;
-    }
-    .box {
-      padding: 10px;
-    }
-    .summary-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .summary-table th,
-    .summary-table td {
-      border: 1px solid #4b6379;
-      padding: 6px;
-      text-align: left;
-      vertical-align: middle;
-    }
-    .summary-table th {
-      background-color: white;
-      color: black;
-    }
-    .summary-table td {
-      background-color: #f9f9f9;
-    }
-    .multiline {
-      white-space: pre-line;
-    }
-    .text-center {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: bold;
-      color: white;
-      background-color: #0d6efd;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background-color: #0b5ed7;
-    }
-  </style>
 </head>
-<body>
-  <table class="header-table">
-    <tr>
-      <td class="label">Dispatch Comments:</td>
-      <td class="box">{{ data.dispatch_comments }}</td>
-    </tr>
-    <tr>
-      <td class="label">Ship To:</td>
-      <td class="box">
-        {{ data.customer_name }}<br>
-        {{ data.shipto_name }}<br>
-        {{ data.site_address }}
-      </td>
-    </tr>
-  </table>
+<body style="font-family:Calibri,Verdana,Arial; font-size:12px; color:black; background:white; padding:20px;">
 
-  <table class="summary-table">
-    <thead>
-      <tr>
-        <th>Order #</th>
-        <th>Delivery #</th>
-        <th>Brand</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>UOM</th>
-        <th>Total Weight</th>
-        <th>Terminal</th>
-        <th>Supplier</th>
-        <th>Type</th>
-        <th>Loading #</th>
-        <th>PO # Corp/Ship To</th>
-        <th>Delivery Date</th>
-        <th>Delivery Day</th>
-        <th>Delivery Window</th>
-        <th>Tank</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for delivery in data.deliveries %}
-      <tr>
-        <td>{{ delivery.order_number }}</td>
-        <td>{{ delivery.delivery_number }}</td>
-        <td>{{ delivery.brand }}</td>
-        <td>{{ delivery.product }}</td>
-        <td>{{ delivery.quantity }}</td>
-        <td>Liter</td>
-        <td></td>
-        <td class="multiline">{{ delivery.terminal }}</td>
-        <td>{{ delivery.supplier }}</td>
-        <td></td>
-        <td></td>
-        <td>{{ delivery.corporate_po }}</td>
-        <td>{{ delivery.delivery_date }}</td>
-        <td>{{ delivery.delivery_day }}</td>
-        <td>{{ delivery.delivery_window }}</td>
-        <td>1250 - Liter - DEF - AST - PUMP REQUIRED</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<!-- Header Info -->
+<table border="0" cellpadding="5" cellspacing="5" style="font-family:Calibri,Verdana,Arial; font-size:12px;">
+  <tr>
+    <td colspan="2" align="right">Mansfield of Canada ULC</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Dispatch Comments:</strong></td>
+    <td>{{ data.dispatch_comments }}</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Ship-to:</strong></td>
+    <td>
+      {{ data.customer_name }}<br>
+      {{ data.shipto_name }}<br>
+      {{ data.site_address }}<br>
+      Site Contact Number<br>
+      {{ data.site_contact }}
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <!-- Final Table -->
+      <table border="1" cellpadding="5" cellspacing="5" style="font-family:Calibri,Verdana,Arial; font-size:12px; width:100%;">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Delivery #</th>
+            <th>Brand</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>UOM</th>
+            <th>Total Weight</th>
+            <th>Terminal</th>
+            <th>Supplier</th>
+            <th>Type</th>
+            <th>Loading #</th>
+            <th>Customer Corp/Ship To  PO #</th>
+            <th>Delivery Date</th>
+            <th>Delivery Day</th>
+            <th>Delivery Window</th>
+            <th>Tank</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for delivery in data.deliveries %}
+          <tr>
+            <td>{{ delivery.order_number }}</td>
+            <td>{{ delivery.delivery_number }}</td>
+            <td>{{ delivery.brand }}</td>
+            <td>{{ delivery.product }}</td>
+            <td>{{ delivery.quantity }}</td>
+            <td>{{ delivery.uom }}</td>
+            <td>{{ delivery.total_weight }}</td>
+            <td>{{ delivery.terminal }}</td>
+            <td>{{ delivery.supplier }}</td>
+            <td>{{ delivery.type }}</td>
+            <td>{{ delivery.loading_number }}</td>
+            <td>{{ delivery.corporate_po }}</td>
+            <td>{{ delivery.delivery_date }}</td>
+            <td>{{ delivery.delivery_day }}</td>
+            <td>{{ delivery.delivery_window }}</td>
+            <td>{{ delivery.tank }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Please click <a href="http://orders.entinuum.com/Orders/AcceptRejectDispatch.aspx">here</a> to accept or reject the delivery.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      If you have any questions, please call us at 877.591.6377 or email <a href="mailto:deflogistics@mansfieldoil.com">deflogistics@mansfieldoil.com</a>
+    </td>
+  </tr>
+</table>
 
-  <div class="text-center">
-    <a href="{{ url_for('form') }}" class="btn">Create Another Dispatch</a>
-  </div>
+<!-- Footer -->
+<div style="text-align:center; margin-top:30px;">
+  <a href="{{ url_for('form') }}" style="display:inline-block; padding:10px 20px; background:#0d6efd; color:white; text-decoration:none; font-weight:bold; border-radius:5px;">
+    Create Another Dispatch
+  </a>
+</div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 
