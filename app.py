@@ -39,7 +39,7 @@ def add_row_to_sheet(sheet_id, form):
         {"column_id": col_map["Type"], "value": form.get("product")},
         {"column_id": col_map["Manual Dispatch Name"], "value": form.get("order_number")},
         {"column_id": col_map["Order Made to Replace Manual?"], "value": ""},
-        {"column_id": col_map["PO"], "value": ""},
+        {"column_id": col_map["PO"], "value": form.get("corporate_po") or ""},
         {"column_id": col_map["Date"], "value": form.get("delivery_date")},
     ]
 
@@ -90,6 +90,7 @@ def result():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
