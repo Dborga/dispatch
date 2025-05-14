@@ -52,8 +52,26 @@ def form():
 @app.route('/result', methods=['POST'])
 def result():
     form = request.form
-    delivery_date = form.get("delivery_date")
-    month_str = datetime.strptime(delivery_date, "%Y-%m-%d").strftime("%B %Y")
+    delivery_date_raw = form.get("delivery_date")
+    month_str = datetime.strptime(delivery_date_raw, "%Y-%m-%d").strftime("%B %Y")
+    formatted_date = datetime.strptime(delivery_date_raw, "%Y-%m-%d").strftime("%m/%d/%Y")
+
+    terminal = form.get("terminal")
+    container = form.get("container")
+
+    # Supplier logic
+    if terminal == "943 Delson MCU DEF INV 180 Theberge St Delson, Quebec, Canada J5B 1X2":
+        supplier = "Mansfield of Canada ULC"
+    elif terminal == "Niagara Falls ON-Oleo Energies 5800 Thorold Stone Rd Niagara Falls, Ontario, Canada L2J1A2":
+        supplier = "Oleo Energies Inc" if container == "Packaged" else "Mansfield of Canada ULC"
+    elif terminal == "Ponoka AB-CBluO 253020 Twp Rd 432 Ponoka, Alberta, Canada T4J 1R2":
+        supplier = "CBluO (DBA)"
+    elif terminal == "Longueuil QC-Crevier 2320 De La Metropole Longueuil, Quebec, Canada J46 1E6":
+        supplier = "Crevier Lubricant Inc"
+    elif terminal == "Kitchener ON-FS Partners 1 Chandaria Place Unit 7 Kitchener, Ontario, Canada N0M1X0":
+        supplier = "FS Partners"
+    else:
+        supplier = "N/A"
 
     sheet_id = get_existing_sheet_id(month_str)
     add_row_to_sheet(sheet_id, form)
@@ -73,13 +91,13 @@ def result():
                 "quantity": form.get("quantity"),
                 "uom": "L",
                 "total_weight": "N/A",
-                "terminal": form.get("terminal"),
-                "supplier": "N/A",
+                "terminal": terminal,
+                "supplier": supplier,
                 "type": form.get("product"),
                 "loading_number": "N/A",
                 "corporate_po": form.get("corporate_po"),
-                "delivery_date": delivery_date,
-                "delivery_day": datetime.strptime(delivery_date, "%Y-%m-%d").strftime("%A"),
+                "delivery_date": formatted_date,
+                "delivery_day": datetime.strptime(delivery_date_raw, "%Y-%m-%d").strftime("%A"),
                 "delivery_window": "N/A",
                 "tank": "N/A"
             }
@@ -90,7 +108,6 @@ def result():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 
 
 
